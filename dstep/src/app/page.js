@@ -12,9 +12,9 @@ export default function Home() {
 		const fetchAnalysis = async () => {
 			try {
 				const res = await axios.get(
-					"http://localhost:3005/report/fetch"
+					`${process.env.NEXT_PUBLIC_BASE_URL}/report/fetch`
 				)
-				setFormData(res.data.data.slice(-1))
+				setFormData(res?.data?.data.slice(-1))
 				console.log(res, "res")
 			} catch (error) {
 				console.log(error)

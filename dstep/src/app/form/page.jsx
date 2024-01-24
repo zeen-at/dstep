@@ -51,7 +51,6 @@ const Page = () => {
 			tradingApplicants: Yup.number().required("This value is required"),
 		}),
         onSubmit: async (values, {setSubmitting}) => {
-            console.log('Form submitted with values:', values);
 
 			try {
 				if (!formik.isValid) {
@@ -60,7 +59,7 @@ const Page = () => {
 				}
 				setLoading(true)
 				const response = await axios.post(
-					process.env.NEXT_PUBLIC_BASE_URL,
+					`${process.env.NEXT_PUBLIC_BASE_URL}/report/data`,
 					values
 				)
 				console.log(response, "res");
