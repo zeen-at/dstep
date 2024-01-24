@@ -89,13 +89,13 @@ const Page = () => {
 			>
 
 				<div className="absolute top-[700px] px-5 sm:px-0 md:left-[500px] sm:top-[90px]">
-					<h2 className="font-bold text-4xl">Welcome!</h2>
-					<p>Kindly crosscheck the details before you submit</p>
+					<h2 className="font-bold text-4xl text-white md:text-black">Welcome!</h2>
+					<p className="text-white md:text-black">Kindly crosscheck the details before you submit</p>
 					<form onSubmit={formik.handleSubmit}>
 						<div className="md:flex py-10">
 							<div>
 								<div className=" md:w-3/4">
-									<label>Total Registered Applicants</label>
+									<label className="text-white md:text-black">Total Registered Applicants</label>
 									<input
 										placeholder="Enter value"
 										type="text"
@@ -113,7 +113,7 @@ const Page = () => {
 									) : null}
 								</div>
 								<div className="my-5 w-full md:w-3/4">
-									<label htmlFor="">
+									<label htmlFor="" className="text-white md:text-black">
 										Percentage of Enrolled Participants
 									</label>
 									<input
@@ -141,7 +141,7 @@ const Page = () => {
 									) : null}
 								</div>
 								<div className="my-5 w-full md:w-3/4">
-									<label htmlFor="">
+									<label htmlFor="" className="text-white md:text-black">
 										Total Female Applicants
 									</label>
 									<input
@@ -160,7 +160,7 @@ const Page = () => {
 									) : null}
 								</div>
 								<div className="my-5 w-full md:w-3/4">
-									<label htmlFor="">
+									<label htmlFor="" className="text-white md:text-black">
 										Total Male Applicants
 									</label>
 									<input
@@ -180,7 +180,7 @@ const Page = () => {
 									) : null}
 								</div>
 								<div className="my-5 w-full md:w-3/4">
-									<label htmlFor="">
+									<label htmlFor="" className="text-white md:text-black">
 										Percentage of Female Applicants
 									</label>
 									<input
@@ -208,7 +208,7 @@ const Page = () => {
 									) : null}
 								</div>
 								<div className="my-5 w-full md:w-3/4">
-									<label htmlFor="">
+									<label htmlFor="" className="text-white md:text-black">
 										Total disabled Applicants
 									</label>
 									<input
@@ -230,7 +230,7 @@ const Page = () => {
 							</div>
 							<div>
 								<div className="md:w-3/4">
-									<label>Total Disabled Females</label>
+									<label className="text-white md:text-black">Total Disabled Females</label>
 									<input
 										placeholder="Enter value"
 										type="text"
@@ -248,7 +248,7 @@ const Page = () => {
 									) : null}
 								</div>
 								<div className="my-5 w-full md:w-3/4">
-									<label htmlFor="">
+									<label htmlFor="" className="text-white md:text-black">
 										Total Disabled Males
 									</label>
 									<input
@@ -268,7 +268,7 @@ const Page = () => {
 									) : null}
 								</div>
 								<div className="my-5 w-full md:w-3/4">
-									<label htmlFor="">
+									<label htmlFor="" className="text-white md:text-black">
 										Percentage of Disabled Applicants
 									</label>
 									<input
@@ -290,7 +290,7 @@ const Page = () => {
 									) : null}
 								</div>
 								<div className="my-5 w-full md:w-3/4">
-									<label htmlFor="">
+									<label htmlFor="" className="text-white md:text-black">
 										Number of Digital Marketing and CRM +
 										Specialization applicants
 									</label>
@@ -314,7 +314,7 @@ const Page = () => {
 								</div>
 
 								<div className="my-5 w-full md:w-3/4">
-									<label htmlFor="">
+									<label htmlFor="" className="text-white md:text-black">
 										Number of Digital Day Trading + Access
 										to Funding applicants
 									</label>
@@ -337,7 +337,7 @@ const Page = () => {
 								<div className="my-[50px] rounded-md w-full md:w-3/4 bg-[#063720] text-center">
 									<button
 										type="submit"
-                                        className="bg-[#063720] text-white p-5"
+                                        className="text-green-950 bg-green-600 w-full md:w-0 md:rounded-none p-5 rounded-md md:bg-[#063720] md:text-white md:p-5"
 									>
 										{!formik.isSubmitting ? "Submit" : "Loading..."}
 									</button>

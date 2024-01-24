@@ -35,7 +35,7 @@ export default function Home() {
 					<div className="absolute w-2/3 lg:w-3/4 md:w-1/2 top-[50px] left-[150px] md:left-[250px]" key={item._id}>
 						<div className="bg-white p-1 md:p-7 rounded-sm w-3/4 md:w-full flex flex-row">
 							<div className="flex text-center items-center ">
-								<h1 className="md:text-[24px] text-[12px]">
+								<h1 className="md:text-[24px] text-[12px">
 									Total enrolled applicants:
 								</h1>
 								<p className="font-bold text-[#063720] md:text-4xl p-4 text-2xl">
