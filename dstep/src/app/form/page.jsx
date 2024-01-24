@@ -60,7 +60,7 @@ const Page = () => {
 				}
 				setLoading(true)
 				const response = await axios.post(
-					"http://localhost:3005/report/data",
+					process.env.NEXT_PUBLIC_BASE_URL,
 					values
 				)
 				console.log(response, "res");
