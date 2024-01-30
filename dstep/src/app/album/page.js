@@ -83,10 +83,7 @@ const Page = () => {
 		setDownloading(false)
 	}
 
-	const handlePageChange = (newPage) => {
-		setCurrentPage(newPage)
-		console.log(`Changing to page ${newPage}`)
-	}
+	
 	return (
 		<>
 			{csv ? (
