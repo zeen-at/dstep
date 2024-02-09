@@ -7,19 +7,52 @@ import axios from "axios"
 import * as d3 from "d3"
 import PieChart from "./component/PieChart"
 
-const data = [
-	{ name: "Females", value: 12 },
-	{ name: "Males", value: 90 },
-]
+
 
 export default function Home() {
-	const [formData, setFormData] = useState([])
+	const [formData, setFormData] = useState([
+
+	])
+	const [mappedData, setMappedData] = useState({
+		percentageOfFemales: "",
+		males: "",
+		registrationNumber: "",
+		projectTitle: "",
+		expectedTrainees: "",
+		personsRegistered: "",
+		attendees: "",
+		percentageOfPWD: "",
+		budgetForm: ""
+	})
+
+
+	useEffect(() => {
+		formData.map((item) => {
+			setMappedData({
+				percentageOfFemales: item.percentageOfFemales,
+				registrationNumber:item.registrationNumber,
+				projectTitle:item.projectTitle,
+				expectedTrainees: item.expectedTrainees,
+				personsRegistered: item.personsRegistered,
+				attendees: item.attendees,
+				percentageOfPWD: item.percentageOfPWD,
+				budgetForm: item.budgetForm
+			})
+		})
+	}, [formData])
+
+	
+
+	const data = [
+		{ name: "Females", value: mappedData.percentageOfFemales },
+		{ name: "Males", value: mappedData.personsRegistered - mappedData.percentageOfFemales },
+	]
 
 	useEffect(() => {
 		const fetchAnalysis = async () => {
 			try {
 				const res = await axios.get(
-					// "http://localhost:3005/report/fetch"
+					// "http://localhost:3006/report/fetch"
 					`${process.env.NEXT_PUBLIC_BASE_URL}/report/fetch`
 				)
 				setFormData(res?.data?.data.slice(-1))
@@ -33,28 +66,24 @@ export default function Home() {
 
 	return (
 		<main
-			style={{ backgroundImage: "url(./bg2.png)" }}
-			className="min-h-screen overflow-y-scroll lg:h-[1000px] relative"
+			style={{ backgroundImage: "url(./reportbg.png)" }}
+			className="min-h-screen overflow-y-scroll relative"
 		>
-			{formData &&
-				formData.map((item) => (
+			
 					<div
 						className="absolute w-2/3 lg:w-3/4 md:w-1/2 top-[50px] left-[150px] md:left-[250px]"
-						key={item._id}
-					>
-						<div className="bg-white p-1 px-7 lg:divide-x-2 rounded-sm w-3/4 md:w-full flex flex-col lg:flex-row md:gap-[100px]">
+			>
+				<div className="py-10 text-2xl font-bold tracking-wider">
+						<h1>DAILY TRACKER ANALYSIS</h1>
+					</div>
+				<div className="bg-white p-1 px-7 lg:divide-x-2 rounded-sm w-3/4 md:w-full flex flex-col lg:flex-row md:gap-[100px]">
+					
 							<div className="flex flex-row text-center items-center">
 								<h1 className="md:text-[24px] text-[12px">
 									Total enrolled applicants:
 								</h1>
 								<p className="font-bold text-[#063720] md:text-4xl p-4 text-2xl">
-									{Math.round(
-										item.totalRegistered *
-											(parseFloat(
-												item.percentageOfEnrolledParticipants
-											) /
-												100)
-									)}
+									{mappedData.registrationNumber}
 								</p>
 							</div>
 							<div className="flex flex-col md:flex-row gap-10 text-center items-center">
@@ -66,13 +95,13 @@ export default function Home() {
 								<div className="items-center">
 									<ul className="marker:text-[#00DDAD] marker:text-2xl list-disc">
 										<li>
-											Females: {item.femaleApplicants}
+											Females: {mappedData.percentageOfFemales}
 										</li>
 									</ul>
 								</div>
 								<div className="items-center">
 									<ul className="marker:text-[#063720] marker:text-2xl list-disc">
-										<li>Males: {item.maleApplicants}</li>
+										<li>Males: {mappedData.personsRegistered - mappedData.percentageOfFemales }</li>
 									</ul>
 								</div>
 							</div>
@@ -81,173 +110,74 @@ export default function Home() {
 						<div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10 mt-10">
 							<div className="bg-white rounded-sm p-6 text-center w-3/4 md:w-full">
 								<p className="text-[14px]">
-									Total registered applicants
+								Registration Number
 								</p>
-								<p className="font-bold md:text-3xl text-lg">
-									{item.totalRegistered}
-								</p>
-							</div>
-							<div className="bg-white rounded-sm p-6 text-center w-3/4 md:w-full">
-								<p className="text-[14px]">
-									Percentage of enrolled applicants
-								</p>
-								<p className="font-bold text-3xl">
-									{item.percentageOfEnrolledParticipants}%
+						<p className="font-bold md:text-3xl text-lg">
+							{mappedData.personsRegistered}
 								</p>
 							</div>
 							<div className="bg-white rounded-sm p-6 text-center w-3/4 md:w-full">
 								<p className="text-[14px]">
-									Total registered{" "}
-									<span className="text-[#00DDAD]">
-										female
-									</span>{" "}
+								Project title
+								</p>
+						<p className="font-bold text-3xl">
+							{mappedData.projectTitle}
+								</p>
+							</div>
+							<div className="bg-white rounded-sm p-6 text-center w-3/4 md:w-full">
+								<p className="text-[14px]">
+								Number of Expected Trainees
 									applicants
 								</p>
-								<p className="font-bold text-3xl">
-									{item.femaleApplicants}
+						<p className="font-bold text-3xl">
+							{mappedData.expectedTrainees}
 								</p>
 							</div>
 							<div className="bg-white rounded-sm p-6 text-center w-3/4 md:w-full">
 								<p className="text-[14px]">
-									Total registered male applicants
+								Number of Persons Registered
 								</p>
-								<p className="font-bold text-3xl">
-									{item.maleApplicants}
-								</p>
-							</div>
-							<div className="bg-white rounded-sm p-6 text-center w-3/4 md:w-full">
-								<p className="text-[14px]">
-									% of registered{" "}
-									<span className="text-[#00DDAD]">
-										female
-									</span>{" "}
-									applicants
-								</p>
-								<p className="font-bold text-3xl">
-									{item.percentageOfFemaleApplicants}%
+						<p className="font-bold text-3xl">
+							{mappedData.personsRegistered}
 								</p>
 							</div>
 							<div className="bg-white rounded-sm p-6 text-center w-3/4 md:w-full">
 								<p className="text-[14px]">
-									Total disabled applicants
+								Number of Trainees in Attendance
 								</p>
-								<p className="font-bold text-3xl">
-									{item.totalDisabled}
-								</p>
-							</div>
-							<div className="bg-white rounded-sm p-6 text-center w-3/4 md:w-full">
-								<p className="text-[14px]">
-									% of disabled applicants
-								</p>
-								<p className="font-bold text-3xl">
-									{item.percentageOfDisabled}%
+						<p className="font-bold text-3xl">
+							{mappedData.attendees}
 								</p>
 							</div>
 							<div className="bg-white rounded-sm p-6 text-center w-3/4 md:w-full">
 								<p className="text-[14px]">
-									Total disabled{" "}
-									<span className="text-[#00DDAD]">
-										females
-									</span>{" "}
+								Number OR % of Female
 								</p>
-								<p className="font-bold text-3xl">
-									{item.disabledFemale}
+						<p className="font-bold text-3xl">
+							{mappedData.percentageOfFemales}
 								</p>
 							</div>
 							<div className="bg-white rounded-sm p-6 text-center w-3/4 md:w-full">
 								<p className="text-[14px]">
-									Total disabled males
+								Number OR % of PWDs
 								</p>
-								<p className="font-bold text-3xl">
-									{item.disabledMale}
-								</p>
-							</div>
-							<div className="bg-white rounded-sm p-6 text-center w-3/4 md:w-full">
-								<p className="text-[14px]">
-									Number of Digital marketing and CRM +
-									Specialization applicants
-								</p>
-								<p className="font-bold text-3xl">
-									{item.marketingApplicants}
+						<p className="font-bold text-3xl">
+							{mappedData.percentageOfPWD}
 								</p>
 							</div>
 							<div className="bg-white rounded-sm p-6 text-center w-3/4 md:w-full">
 								<p className="text-[14px]">
-									Number of Digital day trading + access to
-									funding applicants
+								Finalization of DSDP with KPIs and Budget with Expenditure Forms
 								</p>
-								<p className="font-bold text-3xl">
-									{item.tradingApplicants}
+						<p className="font-bold text-3xl">
+							{mappedData.budgetForm}
 								</p>
 							</div>
+							
+							
 						</div>
 					</div>
-				))}
 		</main>
-		// 	<main className="min-h-screen bg-blue-200 py-10">
-		// 		<h1 className="text-4xl font-bold text-center text-blue-950 my-10">
-		// 			{" "}
-		// 			Report Analysis For DSTEP{" "}
-		//   </h1>
-
-		// 		<div className="flex flex-col flex-1 gap-3 md:gap-24 mx-24 sm:flex-row text-center content-center  max-w-full flex-wrap min-h-screen">
-		// 			<div className="shadow-md w-[300px] bg-blue-800 p-10 hover:animate-pulse rounded-md text-white flex gap-6">
-		// 				<div className="text-start">
-		// 					Total Registered Applicants
-		// 				</div>
-		// 				<h1 className="text-2xl">40</h1>
-		// 			</div>
-		// 			<div className="shadow-md w-[300px] bg-blue-800 p-10 hover:animate-pulse rounded-md text-white flex gap-6 ">
-		// 				<div className="text-start">
-		// 					Percentage of Registered Applicants
-		// 				</div>
-		// 				<h1 className="text-2xl">40%</h1>
-		// 			</div>
-		// 			<div className="shadow-md w-[300px] bg-blue-800 p-10 hover:animate-pulse rounded-md text-white flex gap-6 ">
-		// 				<div className="text-start">Total Male Applicants</div>
-		// 				<h1 className="text-2xl">40</h1>
-		// 			</div>
-		// 			<div className="shadow-md w-[300px] bg-blue-800 p-10 hover:animate-pulse rounded-md text-white flex gap-6 ">
-		// 				<div className="text-start">Total Female Applicants</div>
-		// 				<h1 className="text-2xl">40</h1>
-		// 			</div>
-		// 			<div className="shadow-md w-[300px] bg-blue-800 p-10 hover:animate-pulse rounded-md text-white flex gap-6 ">
-		// 				<div className="text-start">
-		//       Percentage of Female Applicants
-		// 				</div>
-		// 				<h1 className="text-2xl">40</h1>
-		// 			</div>
-		// 			<div className="shadow-md w-[300px] bg-blue-800 p-10 hover:animate-pulse rounded-md text-white flex gap-6 ">
-		// 				<div className="text-start">
-		//       Total Number of Disabled Male Applicants
-		// 				</div>
-		// 				<h1 className="text-2xl">40</h1>
-		// 			</div>
-		// 			<div className="shadow-md w-[300px] bg-blue-800 p-10 hover:animate-pulse rounded-md text-white flex gap-6 ">
-		// 				<div className="text-start">
-		//       Total Number of Disabled Female Applicants
-		// 				</div>
-		// 				<h1 className="text-2xl">40</h1>
-		// 			</div>
-		// 			<div className="shadow-md w-[300px] bg-blue-800 p-10 hover:animate-pulse rounded-md text-white flex gap-6 ">
-		// 				<div className="text-start">
-		//       Percentage of Disabled Applicants
-		// 				</div>
-		// 				<h1 className="text-2xl">40</h1>
-		// 			</div>
-		// 			<div className="shadow-md w-[300px] bg-blue-800 p-10 hover:animate-pulse rounded-md text-white flex gap-6 ">
-		// 				<div className="text-start">
-		//       Number of Applicants registered for Digital Marketing + CRM
-		// 				</div>
-		// 				<h1 className="text-2xl">40</h1>
-		// 			</div>
-		// 			<div className="shadow-md w-[300px] bg-blue-800 p-10 hover:animate-pulse rounded-md text-white flex gap-6 ">
-		// 				<div className="text-start">
-		//       Number of Applicants registered for Digital Trading
-		// 				</div>
-		// 				<h1 className="text-2xl">40</h1>
-		// 			</div>
-		// 		</div>
-		// 	</main>
+		
 	)
 }
