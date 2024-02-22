@@ -38,8 +38,8 @@ const Page = () => {
 			expectedTrainees: Yup.number().required("This field is required!"),
 			personsRegistered: Yup.number().required("This field is required!"),
 			attendees: Yup.number().required("This field is required!"),
-			percentageOfFemales: Yup.number().required("This field is required!"),
-			percentageOfPWD: Yup.number().required("This field is required!"),
+			percentageOfFemales: Yup.string().required("This field is required!"),
+			percentageOfPWD: Yup.string().required("This field is required!"),
 
 		}),
 		onSubmit: async (values, { setSubmitting }) => {

@@ -5,16 +5,10 @@
 import Image from "next/image"
 import React, { useState, useEffect } from "react"
 import Bio from "../component/Bio/otherData"
-import { CiImport } from "react-icons/ci"
-import Papa from "papaparse"
-import * as XLSX from "xlsx"
-import { usePDF } from "react-to-pdf"
+
 
 const Page = () => {
 	const [currentPage, setCurrentPage] = useState(1)
-	const [downloading, setDownloading] = useState(false)
-	const [submitting, setSubmitting] = useState(false)
-	const [csv, setCsv] = useState(null)
 	const [mappedData, setMappedData] = useState({
 		regNo: "",
 		firstName: "",
@@ -52,10 +46,6 @@ const Page = () => {
 
 	const currentData = csv && csv.slice(startIndex, endIndex)
 
-	const { toPDF, targetRef } = usePDF({
-		filename: "album.pdf",
-		onError: (error) => console.error("PDF generation error:", error),
-	})
 
 	useEffect(() => {
 		currentData?.map((item) => {
@@ -94,42 +84,9 @@ const Page = () => {
 		})
 	}, [csv, currentData])
 
-	const handleImport = async (event) => {
-		const file = event.target.files[0]
+	
 
-		if (file) {
-			parseXLSX(file)
-		}
-	}
-
-	const parseXLSX = (file) => {
-		const reader = new FileReader()
-
-		reader.onload = (e) => {
-			const data = e.target.result
-			const workbook = XLSX.read(data, { type: "binary" })
-
-			const sheetName = workbook.SheetNames[0]
-			const worksheet = workbook.Sheets[sheetName]
-
-			const parsedData = XLSX.utils.sheet_to_csv(worksheet, {
-				header: "A",
-			})
-			//   setCsv(parsedData);
-
-			Papa.parse(parsedData, {
-				complete: (result) => {
-					console.log("Parsed CSV data:", result.data)
-					setCsv(result.data)
-				},
-				header: true,
-				dynamicTyping: true,
-			})
-		}
-
-		reader.readAsBinaryString(file)
-	}
-
+	
 	const handleNextPage = () => {
 		if (currentPage < totalPages) {
 			setCurrentPage(currentPage + 1)
@@ -142,11 +99,7 @@ const Page = () => {
 		}
 	}
 
-	const handleDownload = async () => {
-		setDownloading(true)
-		toPDF()
-		setDownloading(false)
-	}
+	
 
 	return (
 		<>
@@ -156,7 +109,6 @@ const Page = () => {
 					backgroundSize: "100%",
 				}}
 				className="min-h-screen overflow-y-scroll w-full relative"
-				ref={targetRef}
 			>
 				<div className="absolute top-10 left-[120px]  md:left-[230px] lg:left-[450px] flex flex-col lg:flex-row justify-between ">
 					<div className="">
@@ -171,7 +123,7 @@ const Page = () => {
 									src="/avatar.jpg"
 									alt="passport"
 									className="object-cover rounded-full items-center"
-								/>
+								/>{" "}
 							</div>
 						</div>
 						<div className="m-10">
@@ -339,42 +291,7 @@ const Page = () => {
 						</div>
 						
 					</div>
-					<div className="m-10">
-						<div className="flex flex-col gap-6">
-							<div className="bg-emerald-700 text-white px-4 py-2 rounded-md cursor-pointer">
-								<label
-									htmlFor="fileInput"
-									className="flex flex-row gap-2 items-center justify-center"
-								>
-									Import <CiImport />
-								</label>
-								<input
-									type="file"
-									id="fileInput"
-									accept=".xlsx, .csv"
-									className="hidden"
-									onChange={handleImport}
-								/>
-							</div>
-							<button
-								type="submit"
-								onClick={() => setSubmitting(true)}
-								disabled={downloading}
-								className="ring-1 ring-emerald-700 text-emerald-700 px-4 py-2 rounded-md cursor-pointer"
-							>
-								{submitting ? "Processing..." : "Submit"}
-							</button>
-							<button
-								type="submit"
-								onClick={handleDownload}
-								disabled={downloading}
-								className="ring-1 ring-emerald-700 text-emerald-700 px-4 py-2 rounded-md cursor-pointer"
-							>
-								{downloading ? "Processing..." : "Download"}
-							</button>
-							
-						</div>
-					</div>
+					
 				</div>
 			</div>
 		</>

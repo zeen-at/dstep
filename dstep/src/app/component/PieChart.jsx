@@ -3,7 +3,7 @@ import * as d3 from "d3"
 
 
 const MARGIN = 30;
-const colors = ["#00DDAD", "#063720"];
+const colors = ["#00DDAD", "#063720", "#f87f7f"];
 
 
 const PieChart = ({
