@@ -4,7 +4,7 @@
 
 import Image from "next/image"
 import React, { useState, useEffect } from "react"
-import Bio from "../component/Bio/otherData"
+import Bio from "@/app/component/Bio/otherData"
 
 const Page = () => {
 	const [currentPage, setCurrentPage] = useState(1)
