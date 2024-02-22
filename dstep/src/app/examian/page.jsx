@@ -61,6 +61,7 @@ const Page = () => {
                 </div>
 
             </section>
+            <section>About Us</section>
 			
 
 		</div>
