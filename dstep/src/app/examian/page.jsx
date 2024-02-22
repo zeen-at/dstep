@@ -55,7 +55,7 @@ const Page = () => {
                             </div>
                         </div>
                     <div className="py-2 w-1/2">
-                        <Image src="/examian.png" width={1000} height={500} alt="examian_img" className="object-contain"/>
+                        <Image src="/examian.png" width={800} height={500} alt="examian_img" className="object-contain"/>
                     </div>
 
                 </div>
